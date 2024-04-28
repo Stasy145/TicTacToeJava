@@ -1,8 +1,16 @@
+// The assumptions:
+// Player is the first one to make a move
+// Player's move is marked by X
+// Computer's move is marked by 0
+// Computer chooses randomly
+
+
+
 import java.util.Scanner;
 
 public class TicTacToeApp {
     static Scanner scanner;
-    
+
     static char[][] map;
     static final int MAP_SIZE = 3;
 
@@ -24,12 +32,12 @@ public class TicTacToeApp {
                 break;
             }
             if (checkDraft()){
-                System.out.println("it's a tie. the game is over");
+                System.out.println("it's a tie. The game is over");
                 break;
             }
 
 
-            aiTurn();
+            computerTurn();
             printMap();
 
             if (checkWin(O_FIELD)) {
@@ -37,7 +45,7 @@ public class TicTacToeApp {
                 break;
             }
             if (checkDraft()){
-                System.out.println("it's a tie. the game is over");
+                System.out.println("it's a tie. The game is over");
                 break;
             }
 
@@ -71,11 +79,11 @@ public class TicTacToeApp {
         return true;
     }
 
-    public static  boolean isCellValid(int x, int y){
-        if (x < 0 || y < 0 || x >= MAP_SIZE || y >= MAP_SIZE){
+    public static  boolean isCellValid(int row, int col){
+        if (row < 0 || col < 0 || row >= MAP_SIZE || col >= MAP_SIZE){
             return false;
         }
-        if(map[x][y] != EMPTY_FIELD){
+        if(map[row][col] != EMPTY_FIELD){
             return  false;
         }
         return  true;
@@ -83,30 +91,30 @@ public class TicTacToeApp {
     }
 
 
-    public static void aiTurn(){
-        int x, y;
+    public static void computerTurn(){
+        int row, col;
         System.out.println("Computer's turn");
         do {
-            x = (int)(Math.random() * MAP_SIZE);
-            y = (int)(Math.random() * MAP_SIZE);
-        } while (!isCellValid(x, y));
+            row = (int)(Math.random() * MAP_SIZE);
+            col = (int)(Math.random() * MAP_SIZE);
+        } while (!isCellValid(row, col));
 
-        map[y][x] = O_FIELD;
-        System.out.println("Computer's entered "  + x + " " + y);
+        map[col][row] = O_FIELD;
+        System.out.println("Computer's entered "  + row + " " + col);
 
     }
 
 
     public static void humanTurn(){
-        int x, y;
+        int row, col;
         do {
-            System.out.println("Player's turn. Enter the coordinates of your turn X and Y");
-            x = scanner.nextInt() - 1;
-            y = scanner.nextInt() - 1;
-        } while (!isCellValid(x, y));
+            System.out.println("Player's turn. Enter the coordinates  X and Y. Use the space between");
+            row = scanner.nextInt() - 1;
+            col = scanner.nextInt() - 1;
+        } while (!isCellValid(row, col));
 
-        map[y][x] = X_FIELD;
-        System.out.println("You entered " + x + " " + y);
+        map[col][row] = X_FIELD;
+        System.out.println("You entered " + row + " " + col);
     }
 
     public static void printMap(){
